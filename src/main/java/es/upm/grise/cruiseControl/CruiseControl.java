@@ -1,4 +1,5 @@
 package es.upm.grise.cruiseControl;
+import ./exceptions.*; 
 
 public class CruiseControl {
 	
@@ -8,29 +9,60 @@ public class CruiseControl {
 	private Integer speedSet;
 	private boolean enabled = false;
 	
-	/*
-	 * Constructor
-	 */
+
 	
-	public CruiseControl(Speedometer speedometer) {}
+	public CruiseControl(Speedometer speedometer) {
+	
+	speedLimit = null;
+	speedSet = null;
+	
+	}
 	
 	/*
 	 * Method to code/test
 	 */
 	
-	public void setSpeedSet(int speedSet) {}
+	public void setSpeedSet(int speedSet) {
+	
+		speedLimit = getSpeedLimit();
+			
+	if (speedSet < 0) {
+		throw new IncorrectSpeedSetException("Velocidad no válida");
+	} else if (speedLimit != null && speedSet > speedLimit) {
+	    throw new SpeedSetAboveSpeedLimitException("Velocidad mayor que el límite de velocidad");
+	  } else {
+	    this.speedSet = speedSet;
+	 }
+	}
+	
+	/* 
+	 *
+	 */
+	
+	public void setSpeedLimit(int speedLimit) {
+	
+		speedSet = getSpeedSet();
+	
+		if(speedLimit <= 0){
+			throw new IncorrectSpeedLimitException("La velocidad límite tiene que ser positiva");
+		}else if(speedSet != null){
+			throw new CannotSetSpeedLimitException("Ya existe un límite de velocidad que mantener");
+		}else{
+		 	this.speedLimit = speedLimit;
+		}
+		
+	}
 	
 	/* 
 	 * Method to code/test
 	 */
 	
-	public void setSpeedLimit(int speedLimit) {}
+	public void disable() {
 	
-	/* 
-	 * Method to code/test
-	 */
+	this.enabled = false;
+        this.speedSet = null;
 	
-	public void disable() {}
+	}
 	
 	/* 
 	 * Others getters and setters
