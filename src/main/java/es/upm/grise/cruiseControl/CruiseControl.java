@@ -1,5 +1,10 @@
 package es.upm.grise.cruiseControl;
 
+import es.upm.grise.cruiseControl.exceptions.CannotSetSpeedLimitException;
+import es.upm.grise.cruiseControl.exceptions.IncorrectSpeedLimitException;
+import es.upm.grise.cruiseControl.exceptions.IncorrectSpeedSetException;
+import es.upm.grise.cruiseControl.exceptions.SpeedSetAboveSpeedLimitException;
+
 public class CruiseControl {
 	
 	@SuppressWarnings("unused")
@@ -12,25 +17,48 @@ public class CruiseControl {
 	 * Constructor
 	 */
 	
-	public CruiseControl(Speedometer speedometer) {}
+	public CruiseControl(Speedometer speedometer) {
+		this.speedLimit = null;
+		this.speedSet = null;
+	}
 	
 	/*
 	 * Method to code/test
 	 */
 	
-	public void setSpeedSet(int speedSet) {}
+	public void setSpeedSet(int speedSet)
+			throws IncorrectSpeedSetException, SpeedSetAboveSpeedLimitException {
+		if (speedSet<=0) {
+			throw new IncorrectSpeedSetException("Speed tiene que ser > 0");
+		}else if (speedLimit!=null && speedSet>speedLimit) {
+			throw new SpeedSetAboveSpeedLimitException("Speed tiene que ser <= speedLimit");
+		}
+		this.speedSet = speedSet;
+		this.enabled = true;
+
+	}
 	
 	/* 
 	 * Method to code/test
 	 */
 	
-	public void setSpeedLimit(int speedLimit) {}
+	public void setSpeedLimit(int speedLimit)
+			throws IncorrectSpeedLimitException, CannotSetSpeedLimitException {
+		if (speedLimit<=0) {
+			throw new IncorrectSpeedLimitException("Speed tiene que ser > 0");
+		}else if (speedSet!=null) {
+			throw new CannotSetSpeedLimitException("Ya hay Speed Set");
+		}
+		this.speedLimit = speedLimit;
+	}
 	
 	/* 
 	 * Method to code/test
 	 */
 	
-	public void disable() {}
+	public void disable() {
+		this.enabled = false;
+	}
 	
 	/* 
 	 * Others getters and setters
