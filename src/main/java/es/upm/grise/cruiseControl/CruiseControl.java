@@ -12,25 +12,40 @@ public class CruiseControl {
 	 * Constructor
 	 */
 	
-	public CruiseControl(Speedometer speedometer) {}
+	public CruiseControl(Speedometer speedometer) {
+		this.speedLimit = null;
+		this.speedSet = null;
+	}
 	
 	/*
 	 * Method to code/test
 	 */
 	
-	public void setSpeedSet(int speedSet) {}
+	public void setSpeedSet(int speedSet) {
+		if(speedSet <= 0) throw new IncorrectSpeedSetException();
+		if(this.speedLimit != null && this.speedSet > this.speedLimit) throw new SpeedSetAboveSpeedLimitException();
+		this.speedSet = new Integer(speedSet);
+		this.enabled = true;
+	}
+	
+	/* 
+	 * Method to code/test
+	 */
+
+	public void setSpeedLimit(int speedLimit) {
+		if(speedLimit <= 0) throw new IncorrectSpeedLimitException();
+		if(speedSet != null) throw new CannotSetSpeedLimitException();
+		this.speedLimit = new Integer(speedLimit); return;
+	}
 	
 	/* 
 	 * Method to code/test
 	 */
 	
-	public void setSpeedLimit(int speedLimit) {}
-	
-	/* 
-	 * Method to code/test
-	 */
-	
-	public void disable() {}
+	public void disable() {
+		this.speedSet = null;
+		this.enabled = false;
+	}
 	
 	/* 
 	 * Others getters and setters
