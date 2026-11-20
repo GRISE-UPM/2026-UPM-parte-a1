@@ -17,10 +17,9 @@ public class CruiseControl {
 	 * Constructor
 	 */
 	
-	public CruiseControl(Speedometer speedometer) {
+	public CruiseControl() {
 		speedLimit = null;
 		speedSet = null;
-		this.speedometer = speedometer;
 	}
 	
 	/*
